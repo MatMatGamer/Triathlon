@@ -61,11 +61,11 @@ namespace Triathlon
                 db.SaveChanges();
                 MessageBox.Show("Insertion effectuée", "Insertion effectuée", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 loadComboBox();
-                cbClub.SelectedIndex = club.ClubId;
+                cbClub.SelectedItem = club;
             }
             catch (Exception err)
             {
-                MessageBox.Show("Erreur lors de la insertion : " + err.InnerException, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erreur lors de l'insertion : " + err.InnerException, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -84,7 +84,7 @@ namespace Triathlon
                 db.SaveChanges();
                 MessageBox.Show("Modification effectuée", "Modification effectuée", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 loadComboBox();
-                cbClub.SelectedIndex = club.ClubId;
+                cbClub.SelectedItem = club;
             }
             catch (Exception err)
             {
