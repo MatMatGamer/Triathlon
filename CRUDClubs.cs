@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -61,11 +62,63 @@ namespace Triathlon
                 MessageBox.Show("Insertion effectuée", "Insertion effectuée", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 loadComboBox();
                 cbClub.SelectedIndex = club.ClubId;
-            } catch (Exception err)
+            }
+            catch (Exception err)
             {
                 MessageBox.Show("Erreur lors de la insertion : " + err.InnerException, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
 
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Club club = (Club)cbClub.SelectedItem;
+                club.ClubVille = tbVille.Text;
+                club.ClubTel = tbTel.Text;
+                club.ClubNom = tbNom.Text;
+                club.ClubCp = tbCP.Text;
+                club.ClubRue = tbRue.Text;
+
+                db.Clubs.Update(club);
+                db.SaveChanges();
+                MessageBox.Show("Modification effectuée", "Modification effectuée", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                loadComboBox();
+                cbClub.SelectedIndex = club.ClubId;
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("Erreur lors de la modification : " + err.InnerException, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Club club = (Club)cbClub.SelectedItem;
+
+                List<Licence> licences = db.Licences.Where(licence => licence.Club == club).ToList();
+                if (licences.Count > 0 )
+                {
+                    MessageBox.Show("Il est impossible de supprimer un club qui posséde des licences", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                var confirmResult = MessageBox.Show("Êtes vous sûr de vouloir supprimer ce club ?", "Confirmation de suppression", MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    db.Clubs.Remove(club);
+                    db.SaveChanges();
+                    MessageBox.Show("Suppression effectuée", "Suppression effectuée", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    loadComboBox();
+                }
+                else return;
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("Erreur lors de la suppression : " + err.InnerException, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

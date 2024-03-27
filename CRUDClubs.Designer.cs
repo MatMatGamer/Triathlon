@@ -63,6 +63,7 @@
             btnDelete.TabIndex = 1;
             btnDelete.Text = "Supprimer";
             btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
             // 
             // btnUpdate
             // 
@@ -72,6 +73,7 @@
             btnUpdate.TabIndex = 2;
             btnUpdate.Text = "Modifier";
             btnUpdate.UseVisualStyleBackColor = true;
+            btnUpdate.Click += btnUpdate_Click;
             // 
             // label1
             // 
