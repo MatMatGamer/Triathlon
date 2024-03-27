@@ -98,14 +98,13 @@ namespace Triathlon
             {
                 Club club = (Club)cbClub.SelectedItem;
 
-                List<Licence> licences = db.Licences.Where(licence => licence.Club == club).ToList();
-                if (licences.Count > 0 )
+                if (club.NbLicencies > 0)
                 {
                     MessageBox.Show("Il est impossible de supprimer un club qui posséde des licences", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
-                var confirmResult = MessageBox.Show("Êtes vous sûr de vouloir supprimer ce club ?", "Confirmation de suppression", MessageBoxButtons.YesNo);
+                var confirmResult = MessageBox.Show("Êtes vous sûr de vouloir supprimer ce club ?", "Confirmation de suppression", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (confirmResult == DialogResult.Yes)
                 {
                     db.Clubs.Remove(club);
@@ -117,7 +116,7 @@ namespace Triathlon
             }
             catch (Exception err)
             {
-                MessageBox.Show("Erreur lors de la suppression : " + err.InnerException, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erreur lors de la suppression : " + err.Message, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

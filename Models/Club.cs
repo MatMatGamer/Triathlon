@@ -32,6 +32,8 @@ namespace Triathlon.Models
         [Column("CLUB_CP")]
         [StringLength(5)]
         public string? ClubCp { get; set; }
+        [Column("NB_LICENCIES", TypeName = "int(11)")]
+        public int? NbLicencies { get; set; }
 
         [InverseProperty("Club")]
         public virtual ICollection<Licence> Licences { get; set; }
