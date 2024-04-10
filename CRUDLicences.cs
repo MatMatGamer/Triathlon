@@ -12,11 +12,11 @@ using Triathlon.Models;
 
 namespace Triathlon
 {
-    public partial class CRUDClubs : Form
+    public partial class CRUDLicences : Form
     {
         private mpeltier_TriathlonContext db = new mpeltier_TriathlonContext();
 
-        public CRUDClubs()
+        public CRUDLicences()
         {
             InitializeComponent();
         }
@@ -29,7 +29,7 @@ namespace Triathlon
             cbClub.ValueMember = "ClubId";
         }
 
-        private void CRUDClubs_Load(object sender, EventArgs e)
+        private void CRUDLicences_Load(object sender, EventArgs e)
         {
             loadComboBox();
         }

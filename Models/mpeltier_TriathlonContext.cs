@@ -5,22 +5,26 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Triathlon.Models
 {
-    public partial class mpeltier_TriathlonDuThonContext : DbContext
+    public partial class mpeltier_TriathlonContext : DbContext
     {
-        public mpeltier_TriathlonDuThonContext()
+        public mpeltier_TriathlonContext()
         {
         }
 
-        public mpeltier_TriathlonDuThonContext(DbContextOptions<mpeltier_TriathlonDuThonContext> options)
+        public mpeltier_TriathlonContext(DbContextOptions<mpeltier_TriathlonContext> options)
             : base(options)
         {
         }
 
         public virtual DbSet<Assurance> Assurances { get; set; } = null!;
         public virtual DbSet<Categorie> Categories { get; set; } = null!;
+        public virtual DbSet<Classe> Classes { get; set; } = null!;
         public virtual DbSet<Club> Clubs { get; set; } = null!;
+        public virtual DbSet<Controle> Controles { get; set; } = null!;
+        public virtual DbSet<ControleSubstance> ControleSubstances { get; set; } = null!;
         public virtual DbSet<Inscription> Inscriptions { get; set; } = null!;
         public virtual DbSet<Licence> Licences { get; set; } = null!;
+        public virtual DbSet<Substance> Substances { get; set; } = null!;
         public virtual DbSet<Triathlon> Triathlons { get; set; } = null!;
         public virtual DbSet<TypeTriathlon> TypeTriathlons { get; set; } = null!;
 
@@ -29,7 +33,7 @@ namespace Triathlon.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySql("server=192.168.4.1;port=3306;user=sqlmpeltier;password=savary;database=mpeltier_TriathlonDuThon;sslmode=required;charset=utf8", Microsoft.EntityFrameworkCore.ServerVersion.Parse("10.11.6-mariadb"));
+                optionsBuilder.UseMySql("server=192.168.4.1;port=3306;user=sqlmpeltier;password=savary;database=mpeltier_Triathlon;sslmode=required;charset=utf8", Microsoft.EntityFrameworkCore.ServerVersion.Parse("10.11.6-mariadb"));
             }
         }
 
@@ -57,6 +61,25 @@ namespace Triathlon.Models
                 entity.Property(e => e.ClubCp).IsFixedLength();
 
                 entity.Property(e => e.ClubTel).IsFixedLength();
+            });
+
+            modelBuilder.Entity<ControleSubstance>(entity =>
+            {
+                entity.HasKey(e => new { e.IdControle, e.IdSubstance })
+                    .HasName("PRIMARY")
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
+
+                entity.HasOne(d => d.IdControleNavigation)
+                    .WithMany(p => p.ControleSubstances)
+                    .HasForeignKey(d => d.IdControle)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("controle_substance_ibfk_1");
+
+                entity.HasOne(d => d.IdSubstanceNavigation)
+                    .WithMany(p => p.ControleSubstances)
+                    .HasForeignKey(d => d.IdSubstance)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("controle_substance_ibfk_2");
             });
 
             modelBuilder.Entity<Inscription>(entity =>
@@ -101,6 +124,15 @@ namespace Triathlon.Models
                     .WithMany(p => p.Licences)
                     .HasForeignKey(d => d.ClubId)
                     .HasConstraintName("FK_LICENCE_CLUB");
+            });
+
+            modelBuilder.Entity<Substance>(entity =>
+            {
+                entity.HasOne(d => d.IdClasseNavigation)
+                    .WithMany(p => p.Substances)
+                    .HasForeignKey(d => d.IdClasse)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("substance_ibfk_1");
             });
 
             modelBuilder.Entity<Triathlon>(entity =>

@@ -15,7 +15,7 @@ namespace Triathlon.Models
         [Column("TRI_ID", TypeName = "int(3)")]
         public int TriId { get; set; }
         [Key]
-        [Column("INSC_DOSSARD", TypeName = "int(2)")]
+        [Column("INSC_DOSSARD", TypeName = "int(11)")]
         public int InscDossard { get; set; }
         [Column("LIC_ID", TypeName = "int(5)")]
         public int LicId { get; set; }

@@ -4,7 +4,7 @@ namespace Triathlon
 {
     public partial class Form1 : Form
     {
-        private mpeltier_TriathlonDuThonContext db = new mpeltier_TriathlonDuThonContext();
+        private mpeltier_TriathlonContext db = new mpeltier_TriathlonContext();
 
         public Form1()
         {

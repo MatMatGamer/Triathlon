@@ -1,6 +1,6 @@
 ﻿namespace Triathlon
 {
-    partial class CRUDClubs
+    partial class CRUDLicences
     {
         /// <summary>
         /// Required designer variable.
@@ -176,7 +176,7 @@
             tbVille.Size = new Size(122, 23);
             tbVille.TabIndex = 19;
             // 
-            // CRUDClubs
+            // CRUDLicences
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -196,9 +196,9 @@
             Controls.Add(btnUpdate);
             Controls.Add(btnDelete);
             Controls.Add(btnCreate);
-            Name = "CRUDClubs";
-            Text = "CRUD Clubs";
-            Load += CRUDClubs_Load;
+            Name = "CRUDLicences";
+            Text = "CRUD Licences";
+            Load += CRUDLicences_Load;
             ResumeLayout(false);
             PerformLayout();
         }
